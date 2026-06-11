@@ -18,5 +18,5 @@ class MedicalRecord(Base):
 
     patient = relationship("PatientProfile", back_populates="medical_records")
     doctor = relationship("DoctorProfile", back_populates="medical_records")
-    appointment = relationship("Appointment", back_populates="medical_records")
-    prescriptions = relationship("Prescription", back_populates="medical_records")
+    appointment = relationship("Appointment", back_populates="medical_record")
+    prescriptions = relationship("Prescription", back_populates="medical_record")

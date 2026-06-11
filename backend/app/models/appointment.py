@@ -7,7 +7,7 @@ from app.database import Base
 
 class AppointmentStatus(str, enum.Enum):
     scheduled ="scheduled"
-    sompleted = "completed"
+    completed = "completed"
     canceled = "canceled"
 
 
