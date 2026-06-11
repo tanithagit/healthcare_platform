@@ -12,7 +12,7 @@ from app.models.prescription import Prescription
 from app.models.invoice import Invoice
 
 # Import all routers
-from app.routers import auth, doctors, patients, admin
+from app.routers import auth, doctors, patients, admin, appointments
 
 app = FastAPI(
     title=settings.APP_NAME,
@@ -36,6 +36,7 @@ app.include_router(auth.router)
 app.include_router(doctors.router)
 app.include_router(patients.router)
 app.include_router(admin.router)
+app.include_router(appointments.router)
 
 
 @app.get("/")
