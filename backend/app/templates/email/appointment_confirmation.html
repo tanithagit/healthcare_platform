@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: auto;
+        }
+        .header {
+            background-color: #2563eb;
+            color: white;
+            padding: 20px;
+            border-radius: 8px 8px 0 0;
+            text-align: center;
+        }
+        .content {
+            padding: 20px;
+        }
+        .detail-box {
+            background-color: #f0f9ff;
+            border-left: 4px solid #2563eb;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .footer {
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏥 Healthcare Platform</h1>
+            <p>Appointment Confirmation</p>
+        </div>
+        <div class="content">
+            <p>Dear <strong>{{ patient_name }}</strong>,</p>
+            <p>Your appointment has been successfully booked!</p>
+
+            <div class="detail-box">
+                <p><strong>📅 Date & Time:</strong> {{ appointment_date }}</p>
+                <p><strong>👨‍⚕️ Doctor:</strong> {{ doctor_name }}</p>
+                <p><strong>🏥 Specialization:</strong> {{ specialization }}</p>
+                <p><strong>📋 Reason:</strong> {{ reason }}</p>
+                <p><strong>💰 Fee:</strong> ₹{{ consultation_fee }}</p>
+            </div>
+
+            <p>Please arrive 10 minutes early for your appointment.</p>
+            <p>If you need to cancel, please do so at least 24 hours in advance.</p>
+        </div>
+        <div class="footer">
+            <p>Healthcare Platform | This is an automated email</p>
+        </div>
+    </div>
+</body>
+</html>

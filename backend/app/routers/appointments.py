@@ -23,20 +23,45 @@ from app.middleware.auth_middleware import (
     get_admin_user,
     get_doctor_or_admin
 )
+from app.services.email_service import send_appointment_confirmation
+
 
 router = APIRouter(prefix="/api/appointments", tags=["Appointments"])
 
 
 # ── Patient books appointment ─────────────────────────────
+# Update book_appointment route:
 @router.post("/")
-def book_appointment(
+async def book_appointment(
     data: AppointmentCreate,
     current_user: User = Depends(get_patient_user),
     db: Session = Depends(get_db)
 ):
     appointment = create_appointment(data, current_user, db)
-    return get_appointment_with_details(appointment, db)
+    details = get_appointment_with_details(appointment, db)
 
+    # Send confirmation email
+    try:
+        doctor = db.query(DoctorProfile).filter(
+            DoctorProfile.id == appointment.doctor_id
+        ).first()
+        doctor_user = db.query(User).filter(
+            User.id == doctor.user_id
+        ).first() if doctor else None
+
+        await send_appointment_confirmation(
+            patient_email=current_user.email,
+            patient_name=current_user.email.split("@")[0],
+            doctor_name=doctor_user.email.split("@")[0] if doctor_user else "Doctor",
+            specialization=doctor.specialization if doctor else "",
+            appointment_date=str(appointment.appointment_date),
+            reason=appointment.reason or "General Checkup",
+            consultation_fee=doctor.consultation_fee if doctor else 0
+        )
+    except Exception:
+        pass  # Don't fail booking if email fails
+
+    return details
 
 # ── Check slot availability ───────────────────────────────
 @router.get("/check-slot")

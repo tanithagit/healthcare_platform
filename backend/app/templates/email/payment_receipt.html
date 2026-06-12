@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: auto;
+        }
+        .header {
+            background-color: #16a34a;
+            color: white;
+            padding: 20px;
+            border-radius: 8px 8px 0 0;
+            text-align: center;
+        }
+        .detail-box {
+            background-color: #f0fdf4;
+            border-left: 4px solid #16a34a;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .amount {
+            font-size: 24px;
+            color: #16a34a;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .footer {
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✅ Payment Successful</h1>
+            <p>Payment Receipt</p>
+        </div>
+        <div class="content">
+            <p>Dear <strong>{{ patient_name }}</strong>,</p>
+            <p>Your payment has been received successfully!</p>
+
+            <div class="amount">₹{{ amount }} Paid</div>
+
+            <div class="detail-box">
+                <p><strong>🧾 Invoice ID:</strong> #{{ invoice_id }}</p>
+                <p><strong>📅 Appointment:</strong> #{{ appointment_id }}</p>
+                <p><strong>💳 Payment Date:</strong> {{ paid_at }}</p>
+                <p><strong>📊 Status:</strong> PAID ✅</p>
+            </div>
+
+            <p>Thank you for using Healthcare Platform!</p>
+        </div>
+        <div class="footer">
+            <p>Healthcare Platform | This is an automated email</p>
+        </div>
+    </div>
+</body>
+</html>

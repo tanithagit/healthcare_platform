@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: auto;
+        }
+        .header {
+            background-color: #7c3aed;
+            color: white;
+            padding: 20px;
+            border-radius: 8px 8px 0 0;
+            text-align: center;
+        }
+        .medicine-box {
+            background-color: #faf5ff;
+            border-left: 4px solid #7c3aed;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .footer {
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💊 Prescription Ready</h1>
+        </div>
+        <div class="content">
+            <p>Dear <strong>{{ patient_name }}</strong>,</p>
+            <p>Your prescription from <strong>Dr. {{ doctor_name }}</strong> is ready.</p>
+
+            <h3>Prescribed Medicines:</h3>
+            {% for medicine in medicines %}
+            <div class="medicine-box">
+                <p><strong>💊 Medicine:</strong> {{ medicine.name }}</p>
+                <p><strong>📏 Dosage:</strong> {{ medicine.dosage }}</p>
+                <p><strong>📋 Instructions:</strong> {{ medicine.instructions }}</p>
+                <p><strong>📅 Duration:</strong> {{ medicine.duration_days }} days</p>
+            </div>
+            {% endfor %}
+
+            <p>Please follow the prescribed dosage carefully.</p>
+        </div>
+        <div class="footer">
+            <p>Healthcare Platform | This is an automated email</p>
+        </div>
+    </div>
+</body>
+</html>

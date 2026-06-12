@@ -18,6 +18,8 @@ from app.middleware.auth_middleware import (
     get_patient_user,
     get_admin_user
 )
+from app.services.email_service import send_payment_receipt
+
 
 router = APIRouter(prefix="/api/billing", tags=["Billing"])
 
@@ -101,13 +103,37 @@ def checkout_session(
 
 # ── Mark invoice as paid (for testing) ───────────────────
 @router.put("/mark-paid/{invoice_id}")
-def mark_paid(
+async def mark_paid(
     invoice_id: int,
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     invoice = mark_invoice_paid(invoice_id, db)
-    return build_invoice_response(invoice, db)
+    response = build_invoice_response(invoice, db)
+
+    # Send receipt email
+    try:
+        patient = db.query(PatientProfile).filter(
+            PatientProfile.id == invoice.patient_id
+        ).first()
+        patient_user = db.query(User).filter(
+            User.id == patient.user_id
+        ).first() if patient else None
+
+        if patient_user:
+            await send_payment_receipt(
+                patient_email=patient_user.email,
+                patient_name=patient_user.email.split("@")[0],
+                invoice_id=invoice.id,
+                appointment_id=invoice.appointment_id,
+                amount=invoice.amount,
+                paid_at=str(invoice.paid_at)
+            )
+    except Exception:
+        pass
+
+    return response
+
 
 
 # ── Stripe webhook ────────────────────────────────────────
