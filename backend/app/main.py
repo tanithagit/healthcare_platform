@@ -19,7 +19,8 @@ from app.routers import (
     admin,
     appointments,
     medical_records,
-    prescriptions
+    prescriptions,
+    billing
 )
 
 app = FastAPI(
@@ -39,7 +40,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Register Routers
+# Register All Routers
 app.include_router(auth.router)
 app.include_router(doctors.router)
 app.include_router(patients.router)
@@ -47,6 +48,7 @@ app.include_router(admin.router)
 app.include_router(appointments.router)
 app.include_router(medical_records.router)
 app.include_router(prescriptions.router)
+app.include_router(billing.router)
 
 
 @app.get("/")
